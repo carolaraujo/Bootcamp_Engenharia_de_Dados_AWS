@@ -75,3 +75,29 @@ multi_moedas(20, "EUR-BRL")
 multi_moedas(20, "BTC-BRL")
 multi_moedas(20, "RPL-BRL")
 multi_moedas(20, "JPY-BRL")
+
+# %%
+import backoff
+import random
+
+@backoff.on_exception(backoff.expo,(ConnectionAbortedError,ConnectionRefusedError,TimeoutError), max_tries=10)
+def test_func(*args, **kwargs):
+   rnd = random.random()
+   print(f"""
+          RND: {rnd}
+          args: {args if args else 'sem args'}
+          kargs: {kwargs if kwargs else 'sem kwargs'}
+          """)
+   if rnd < .2:
+      raise ConnectionAbortedError('Conexão foi finalizada')
+   elif rnd < .4:
+      raise ConnectionRefusedError('Conexão foi recusada')
+   elif rnd < .6:
+      raise TimeoutError('Tempo de espera execedido')
+   else:
+      return "ok!"
+# %%
+test_func()
+# %%
+test_func(42, 51, nome="carol")
+# %%
