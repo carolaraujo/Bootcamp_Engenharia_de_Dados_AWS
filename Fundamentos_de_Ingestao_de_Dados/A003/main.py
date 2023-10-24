@@ -101,3 +101,34 @@ test_func()
 # %%
 test_func(42, 51, nome="carol")
 # %%
+import logging
+
+#%%
+log = logging.getLogger()
+log.setLevel(logging.DEBUG)
+formatter = logging.Formatter(
+   '%(acstime)s - %(name)s - %(levelname)s - %(message)s')
+ch = logging.StreamHandler()
+ch.setFormatter(formatter)
+log.addHandler(ch)
+# %%
+@backoff.on_exception(backoff.expo,(ConnectionAbortedError,ConnectionRefusedError,TimeoutError), max_tries=10)
+def test_func(*args, **kwargs):
+   rnd = random.random()
+   log.debug(f"RND: {rnd}")
+   log.info(f"args: {args if args else 'sem args'}")
+   log.info(f"kargs: {kwargs if kwargs else 'sem kwargs'}")
+   if rnd < .2:
+      log.error('Conexão foi finalizada')
+      raise ConnectionAbortedError('Conexão foi finalizada')
+   elif rnd < .4:
+      log.error('Conexão foi recusada')
+      raise ConnectionRefusedError('Conexão foi recusada')
+   elif rnd < .6:
+      log.error('Tempo de espera execedido')
+      raise TimeoutError()
+   else:
+      return "ok!"
+# %%
+test_func()
+# %%
