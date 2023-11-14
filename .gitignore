@@ -1,2 +1,5 @@
 # Environments
 .env
+
+#Terraform
+Terraforma_Cloudformation/.terraform.lock.hcl
