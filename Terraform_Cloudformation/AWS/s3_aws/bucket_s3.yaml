@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "AWS CloudFormation Sample Template S3 bucket"
+Resources:
+  S3BucketDevelopement:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      BucketName: bucket-do-pastel-dev
+      Tags:
+        - Key: Area
+          Value: "Produtos"
+        - Key: Environment
+          Value: "Developement"
+
+  S3BucketProduction:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      BucketName: bucket-do-pastel-prd
+      Tags:
+        - Key: Area
+          Value: "Produtos"
+        - Key: Environment
+          Value: "Production"
