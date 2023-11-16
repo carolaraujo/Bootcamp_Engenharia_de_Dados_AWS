@@ -19,7 +19,7 @@ elem_cep.click()
 elem_cep.clear()
 elem_cep.send_keys('80420130')
 # %%
-#p preenchendo o cep
+# selecionando o tipo de cep
 elem_cod = driver.find_element('name', 'tipoCEP')
 elem_cod.click()
 elem_cod = driver.find_element('xpath', '//*[@id="tipoCEP"]/optgroup/option[6]')
@@ -27,4 +27,24 @@ elem_cod = driver.find_element('xpath', '//*[@id="tipoCEP"]/optgroup/option[6]')
 # clicando em pesquisar
 elem_cod = driver.find_element('id', 'btn_pesquisar')
 elem_cod.click()
+# %%
+# capturando os dados da pesquisa
+logradouro = driver.find_element('xpath', '/html/body/main/form/div[1]/div[2]/div/div[4]/table/tbody/tr/td[1]')
+logradouro.text
+bairro = driver.find_element('xpath', '//*[@id="resultado-DNEC"]/tbody/tr/td[2]')
+bairro.text
+localidade = driver.find_element('xpath', '//*[@id="resultado-DNEC"]/tbody/tr/td[3]')
+localidade.text
+cep = driver.find_element('xpath', '//*[@id="resultado-DNEC"]/tbody/tr/td[4]')
+cep.text
+
+driver.close()
+# %%
+print(f"""
+      Para o CEP: {cep.text}
+      Endereço: {logradouro.text}
+      Bairro: {bairro.text}
+      Localidade: {localidade.text}
+""")
+
 # %%
